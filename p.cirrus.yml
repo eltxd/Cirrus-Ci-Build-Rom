@@ -1,0 +1,27 @@
+task:
+    name: "Building An Android Rom"
+    timeout_in: 120m
+    container:
+        image: shazuxdubuntu/ubuntu:latest
+        cpu: 8
+        memory: 32G
+        
+    Setup_Enviroment:
+    - apt install sudo
+    - sudo apt update -y && sudo apt install git aria2 build-essential curl wget rsync zip unzip lzma cpio ccache clang -y
+    - sudo apt install python3 -y
+    - sudo apt install repo
+    - git config --global user.name "eltxd"
+    - git config --global user.email "samuelchristianb8@gmail.com"
+    
+    Syncing_Rom_And_Trees:
+    - git clone --depth=1 https://github.com/eltxd/device_xiaomi_fleur -b 13-enfocing device/xiaomi/fleur
+    - git clone --depth=1 https://github.com/MiCode/Xiaomi_Kernel_OpenSource -b fleur-s-oss kernel/xiaomi/fleur
+    - git clone --depth=1 https://github.com/eltxd/proprietary_vendor_xiaomi_ims-fleur -b eleven vendor/xiaomi/fleur
+    - repo init --depth=1 -u https://github.com/LineageOS/android -b lineage-20.0
+    - repo sync
+    
+    Building:
+    - source build/envsetup.sh
+    - lunch lineage_fleur-userdebug
+    - m bacon
