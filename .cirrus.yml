@@ -19,7 +19,7 @@ task:
     - git clone --depth=1 https://github.com/MiCode/Xiaomi_Kernel_OpenSource -b fleur-s-oss kernel/xiaomi/fleur
     - git clone --depth=1 https://github.com/eltxd/proprietary_vendor_xiaomi_ims-fleur -b eleven vendor/xiaomi/fleur
     - repo init --depth=1 -u https://github.com/LineageOS/android -b lineage-20.0
-    - repo sync
+    - repo sync -j8
     
     Building:
     - source build/envsetup.sh
